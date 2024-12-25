@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>给梦宝的圣诞祝福</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 切换按钮 -->
+    <div class="toggle-card">
+        <div class="toggle-icon">👈</div>
+    </div>
+
+    <!-- 加载动画 -->
+    <div class="loading">
+        <div class="loading-heart"></div>
+        <div class="loading-text">
+            <span>正</span>
+            <span>在</span>
+            <span>给</span>
+            <span>宝</span>
+            <span>宝</span>
+            <span>准</span>
+            <span>备</span>
+            <span>惊</span>
+            <span>喜</span>
+            <span>.</span>
+            <span>.</span>
+            <span>.</span>
+        </div>
+    </div>
+
+    <!-- 3D场景 -->
+    <canvas id="scene"></canvas>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <div class="content-wrapper">
+            <h1 class="glow-text clickable">亲爱的梦宝：</h1>
+            <div class="heart-wrapper">
+                <div class="heart clickable"></div>
+                <div class="heart-particles"></div>
+            </div>
+            <div class="message">
+                <p class="clickable" data-depth="0.4">圣诞快乐呀（虽然咱们不过洋节，嘿嘿）</p>
+                <p class="clickable" data-depth="0.6">希望宝宝一直开心幸福</p>
+                <p class="clickable" data-depth="0.8">有你的每一刻都很幸福</p>
+                <p class="clickable" data-depth="1.0">永远爱你哦</p>
+                <div class="signature-wrapper">
+                    <p class="signature clickable" data-depth="1.2">————爱你的贺贺</p>
+                </div>
+            </div>
+            <div class="photo-container">
+                <div class="photo-frame clickable">
+                    <div class="photo-overlay"></div>
+                    <img src="1.jpg" alt="我们的照片" loading="lazy">
+                </div>
+                <div class="photo-reflection"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 音频控制 -->
+    <div class="audio-container">
+        <audio id="bgMusic" loop preload="auto">
+            <source src="https://music.163.com/song/media/outer/url?id=1892513656.mp3" type="audio/mpeg">
+        </audio>
+        <div class="music-control clickable">
+            <div class="music-icon">🎵</div>
+            <div class="music-waves">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3D控制提示 -->
+    <div class="control-tips">
+        <div class="tip-icon">👆</div>
+        <div class="tip-text">宝宝可以拖动或滚轮缩放查看3D效果哦</div>
+        <div class="tip-particles"></div>
+    </div>
+
+    <!-- 背景粒子 -->
+    <div class="particles-container"></div>
+
+    <!-- 装饰元素 -->
+    <div class="decorations">
+        <div class="stars"></div>
+        <div class="sparkles"></div>
+    </div>
+
+    <!-- 创作者签名 -->
+    <div class="creator-signature">由贺贺完全自创哦</div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html> 

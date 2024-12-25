@@ -1,0 +1,587 @@
+/* 基础样式 */
+:root {
+    --primary-color: #ff3366;
+    --secondary-color: #1a2a6c;
+    --text-color: #ffffff;
+    --heart-color: #ff0000;
+    --heart-hover-color: #ff3366;
+    --background-start: #1a2a6c;
+    --background-end: #b21f1f;
+    --glass-background: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(45deg, var(--background-start), var(--background-end));
+    font-family: 'Ma Shan Zheng', Arial, sans-serif;
+    color: var(--text-color);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+/* 容器样式 */
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    transition: all 0.5s ease;
+}
+
+.content-wrapper {
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+    transform-style: preserve-3d;
+    animation: float 6s ease-in-out infinite;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* 3D场景样式 */
+#scene {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: all;
+}
+
+/* 标题样式 */
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 20px rgba(255,255,255,0.5);
+    transform: translateZ(30px);
+    transition: all 0.3s ease;
+}
+
+/* 心形样式 */
+.heart-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 2rem auto;
+    transform-style: preserve-3d;
+}
+
+.heart {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    animation: heartbeat 1.5s infinite;
+    cursor: pointer;
+}
+
+.heart:before,
+.heart:after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 80px;
+    background: var(--heart-color);
+    border-radius: 50px 50px 0 0;
+    box-shadow: 0 0 30px rgba(255,0,0,0.5);
+    transition: all 0.3s ease;
+}
+
+.heart:before {
+    left: 50px;
+    transform: rotate(-45deg) translateZ(10px);
+    transform-origin: 0 100%;
+}
+
+.heart:after {
+    left: 0;
+    transform: rotate(45deg) translateZ(10px);
+    transform-origin: 100% 100%;
+}
+
+.heart-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* 消息样式 */
+.message {
+    margin: 2rem 0;
+    transform-style: preserve-3d;
+}
+
+.message p {
+    font-size: 1.2em;
+    line-height: 1.8;
+    margin: 1rem 0;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateZ(var(--depth));
+    transition: all 0.3s ease;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeInUp 0.5s forwards;
+}
+
+/* 照片样式 */
+.photo-container {
+    position: relative;
+    transform-style: preserve-3d;
+    margin: 2rem auto;
+}
+
+.photo-frame {
+    width: 300px;
+    height: 200px;
+    border: 10px solid rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    transform: translateZ(20px);
+    transition: all 0.5s ease;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.1) 50%,
+        rgba(255,255,255,0) 100%
+    );
+    transform: translateY(100%) rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+.photo-reflection {
+    position: absolute;
+    bottom: -20px;
+    left: 5%;
+    width: 90%;
+    height: 20px;
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.3),
+        transparent
+    );
+    filter: blur(5px);
+    transform: rotateX(180deg) translateZ(-20px);
+}
+
+/* 音频控制样式 */
+.audio-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.music-control {
+    width: 50px;
+    height: 50px;
+    background: var(--glass-background);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.music-waves {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.music-waves span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--glass-border);
+    border-radius: 50%;
+    animation: waves 2s infinite;
+    opacity: 0;
+}
+
+.music-waves span:nth-child(1) { animation-delay: 0.0s; }
+.music-waves span:nth-child(2) { animation-delay: 0.3s; }
+.music-waves span:nth-child(3) { animation-delay: 0.6s; }
+.music-waves span:nth-child(4) { animation-delay: 0.9s; }
+
+/* 控制提示样式 */
+.control-tips {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--glass-background);
+    padding: 12px 24px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 100;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 0 20px var(--glass-shadow);
+}
+
+/* 装饰元素样式 */
+.decorations {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 1%);
+    background-size: 3px 3px;
+}
+
+.sparkles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+/* 动画定义 */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotateX(5deg) scale(1);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    50% {
+        transform: translateY(-20px) rotateX(-5deg) scale(1.02);
+        box-shadow: 0 25px 35px rgba(0,0,0,0.2);
+    }
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1) translateZ(0); }
+    50% { transform: scale(1.2) translateZ(30px); }
+}
+
+@keyframes waves {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(200%) rotate(45deg); }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 加载动画 */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, var(--background-start), var(--background-end));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s;
+}
+
+.loading-heart {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    animation: heartbeat 1.2s infinite;
+    margin-bottom: 20px;
+}
+
+.loading-heart:before,
+.loading-heart:after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 40px;
+    background: #fff;
+    border-radius: 25px 25px 0 0;
+}
+
+.loading-heart:before {
+    left: 25px;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
+.loading-heart:after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
+.loading-text {
+    margin-top: 2rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.loading-text span {
+    font-size: 1.2em;
+    animation: bounce 0.5s ease infinite;
+    display: inline-block;
+    opacity: 0.8;
+}
+
+.loading-text span:nth-child(1) { animation-delay: 0.0s; }
+.loading-text span:nth-child(2) { animation-delay: 0.1s; }
+.loading-text span:nth-child(3) { animation-delay: 0.2s; }
+.loading-text span:nth-child(4) { animation-delay: 0.3s; }
+.loading-text span:nth-child(5) { animation-delay: 0.4s; }
+.loading-text span:nth-child(6) { animation-delay: 0.5s; }
+.loading-text span:nth-child(7) { animation-delay: 0.6s; }
+.loading-text span:nth-child(8) { animation-delay: 0.7s; }
+.loading-text span:nth-child(9) { animation-delay: 0.8s; }
+.loading-text span:nth-child(10) { animation-delay: 0.9s; }
+.loading-text span:nth-child(11) { animation-delay: 1.0s; }
+.loading-text span:nth-child(12) { animation-delay: 1.1s; }
+.loading-text span:nth-child(13) { animation-delay: 1.2s; }
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .content-wrapper {
+        padding: 1.5rem;
+        margin: 10px;
+        max-width: 95%;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .message p {
+        font-size: 1.1em;
+        padding: 12px;
+    }
+
+    .photo-frame {
+        width: 85%;
+        height: 160px;
+        border-width: 5px;
+    }
+
+    .heart-wrapper {
+        width: 80px;
+        height: 80px;
+    }
+
+    .music-control {
+        width: 40px;
+        height: 40px;
+    }
+
+    .control-tips {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) rotateX(2deg);
+        }
+        50% {
+            transform: translateY(-10px) rotateX(-2deg);
+        }
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) {
+    .content-wrapper {
+        animation: none;
+    }
+
+    .photo-frame:hover {
+        transform: none !important;
+    }
+
+    .message p:hover {
+        transform: none !important;
+    }
+}
+
+/* 切换按钮样式 */
+.toggle-card {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.toggle-icon {
+    font-size: 1.5em;
+    transition: transform 0.3s ease;
+}
+
+.toggle-card:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .toggle-card {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .toggle-icon {
+        font-size: 1.2em;
+    }
+}
+
+/* 卡片收起状态 */
+.container.collapsed {
+    transform: translate(100%, -50%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.toggle-card.collapsed .toggle-icon {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+    .container.collapsed {
+        transform: translate(100%, -50%);
+    }
+    
+    .toggle-card {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .toggle-icon {
+        font-size: 1.2em;
+    }
+}
+
+/* 落款样式 */
+.signature {
+    text-align: right;
+    font-style: italic;
+    margin-top: 2rem !important;
+    font-size: 1.3em !important;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.signature:hover {
+    transform: translateZ(30px) scale(1.05) !important;
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.creator-signature {
+    position: fixed;
+    left: 20px;
+    bottom: 15px;
+    font-style: italic;
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.4);
+    transform: rotate(-2deg);
+    z-index: 100;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.creator-signature:hover {
+    color: rgba(255, 255, 255, 0.6);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+    .creator-signature {
+        font-size: 0.8em;
+        left: 15px;
+        bottom: 10px;
+    }
+} 
